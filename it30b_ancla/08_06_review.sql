@@ -4,3 +4,8 @@ CREATE TABLE `student` (
   `student_last_name` varchar(50) NOT NULL,
   `student_course` varchar(50) NOT NULL
 );
+
+
+CREATE TABLE book(
+    book_id 
+)
