@@ -43,4 +43,10 @@ VALUES ("MAKIE", "ANCLA", "BSBA");
 UPDATE students set student_created_At = CURRENT_TIMESTAMP WHERE student_created_at IS NULL;
 
 ALTER TABLE students MODIFY COLUMN student_create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+<<<<<<< HEAD
+
+
+sajbdsadbjaksdbasdandsband
+=======
 >>>>>>> feature/01-use-cases
+>>>>>>> origin/main
