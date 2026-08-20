@@ -13,7 +13,15 @@ INSERT INTO <table_name_in_plural>
 #Utility Commands
 \! cls
 
-mysqldump -u root -p --databases library_makie > C:\xampp\htdocs\dev\backups\081826_library_makie.sql
+source C:\xampp\htdocs\dev\it30b_ancla\backups\library_db_20260820_2026-08-20.sql
 
-mysqldump -u root -p --database library_makie > C:\xampp\htdocs\dev\backups\%date:~4%%date:~4,2%%date:~7,2%_%time:~0,2%%time:~3,2%%time:~6,2%_library_makie.sql"
+mysqldump -u root -p --databases library_makie > "C:\xampp\htdocs\dev\backups\library_db_20260820_%date:~10,4%-%date:~4,2%-%date:~7,2%.sql"
 
+ALTER TABLE students ADD COLUMN student_created_at TIMESTAMP NULL DEFAULT NULL;
+
+INSERT INTO students(student_first_name, student_last_name, student_course)
+VALUES ("MAKIE", "ANCLA", "BSBA");
+
+UPDATE students set student_created_At = CURRENT_TIMESTAMP WHERE student_created_at IS NULL;
+
+ALTER TABLE students MODIFY COLUMN student_create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
