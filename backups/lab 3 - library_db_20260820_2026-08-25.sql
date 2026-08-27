@@ -61,8 +61,8 @@ CREATE TABLE `borrow` (
   `borrow_id` int(11) NOT NULL AUTO_INCREMENT,
   `student_id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL,
-  `borrow_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `borrow_return_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `borrow_date` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+  `borrow_return_date` TIMESTAMP NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`borrow_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
