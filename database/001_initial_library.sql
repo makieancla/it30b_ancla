@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXIST borrow (
     -- borrow return timestamp  null by default
     borrow_return_date TIMESTAMP NULL
         DEFAULT NULL,
-        
+
     -- borrow table constraints and foreign keys
     CONSTRAINT fk-borrow_student
         FOREIGN KEY (student_id)
@@ -65,3 +65,33 @@ CREATE TABLE IF NOT EXIST borrow (
 ) ENGINE=InnoDB 
 DEFAULT CHARSET=utf8mb4;
 COLLATE=utf8mb4_unicode_ci;
+
+
+-- insert statement #1: insert student
+INSERT INTO students (
+    student_first_name,
+    student_last_name,
+    student_course
+) VALUES 
+    ('MC FRANCIS', 'ANCLA', 'BSIT'),
+    ('MAKMAK', 'ESTOQUE', 'BSED'),
+    ('MAKIE', 'ANCLA', 'BSBA');
+    
+-- insert statement #2: insert book
+INSERT INTO books (
+    book_title,
+    book_author,
+    book_category
+) VALUES 
+    ('The Great Gatsby', 'F. Scott Fitzgerald', 'Classic Novel'),
+    ('Pride and Prejudice', 'Jane Austen', 'Classic Romance'),
+    ('The Hobbit', 'J.R.R. Tolkien', 'Fantasy');
+
+-- insert statement #3: insert borrow
+INSERT INTO borrow (
+    student_id,
+    book_id
+) VALUES 
+    (1, 2),
+    (2, 1),
+    (3, 3);
