@@ -94,3 +94,9 @@ MariaDB [library_makie]> INSERT INTO borrow(student_id,book_id) VALUES
     (1,1),
     (1,2),
     (3,2);
+
+
+UPDATE books
+SET book_title = 'M',
+    book_author = 'ANCLA'
+WHERE student_id = 2;
