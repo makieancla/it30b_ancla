@@ -49,8 +49,8 @@ LIMIT 1;
 
 -- student SQL#11 - Update a student base on id
 UPDATE students
-SET student_first_name = 'MC FRANCIS',
-    student_last_name = 'ANCLA'
+SET student_first_name = '',
+    student_last_name = ''
 WHERE student_id = 2;
 
 UPDATE books
