@@ -38,7 +38,39 @@ $stmt = $pdo->query("
 ");
 
     $students = $stmt->fetchAll();
-} 
+}
+
+//Create student
+if ($section=='students' && $action==='create'){
+    if($_SERVER['REQUEST_METHOD']==='POST'){
+        $firstname = trim($_POST['student_first_name']?? '');
+        $lastname = trim($_POST['student_last_name']?? '');
+        $course = trim($_POST['student_course']?? '');
+
+        if($firstname !== '' && $lastname !=='' && $course!== ''){
+            $sql = "
+                INSERT INTO students(
+                    student_first_name,
+                    student_last_name,
+                    student_course
+                )
+                VALUES (?,?,?)
+            ";
+            
+            $stmt=$pdo->prepare($sql);
+
+            $stmt->execute([
+                $firstname,
+                $lastname,
+                $course
+            ]);
+
+            header("Location: index.php?section=students");
+            exit;
+        }
+    }
+    
+}
 
 ?>
 <!DOCTYPE html>
@@ -54,13 +86,59 @@ $stmt = $pdo->query("
     <a href="index.php?section=students">Students</a> |
     <a href="index.php?section=books">Books</a> |
     <a href="index.php?section=borrow">Borrow</a> |
-    <
 </nav>
 <hr>
 <?php if ($section === 'students'): ?>
     <h1>Students</h1>
-    <table>
-        <thread>
+
+    <p>
+        <a href="index.php?section=students&action=create">
+            Add Student
+        </a>
+    </p>
+
+    <?php if ($action=='create'): ?>
+    <h2>Create Student<h2>
+    <form method="POST">
+    <p>
+            <label>First Name:</label>
+            <br>
+            <input type="text"
+                    name="student_first_name"
+                    required
+            />
+        </p>  
+    <p>
+            <label>Last Name:</label>
+            <br>
+            <input type="text"
+                    name="student_last_name"
+                    required
+            />
+        </p>
+    <p>
+            <label>Course:</label>
+            <br>
+            <input type="text"
+                    name="student_course"
+                    required
+            />
+        </p>
+
+
+        <button type="submit">
+            save
+        </button>
+
+        <a href="index.php?section=students">
+            Cancel
+        </a>
+</form>
+    
+
+    <?php else: ?>
+        <table>
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>First Name</th>
@@ -68,9 +146,8 @@ $stmt = $pdo->query("
                 <th>Course</th>
                 <th>Created at</th>
                 <th>Actions</th>
-
             </tr>
-        </thread>
+        </thead>
         <tbody>
             <?php foreach($students as $student): ?>
                 <tr>
@@ -99,8 +176,10 @@ $stmt = $pdo->query("
                 </tr>
             <?php endforeach?>
         </tbody>
+        <?php endif;?>
     </table>
-<?php endif;?>
+    <?php endif; ?>
+
 
 <?php if ($section === 'books'): ?>
     <h1>Books</h1>

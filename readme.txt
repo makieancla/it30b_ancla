@@ -5,14 +5,12 @@ CREATE TABLE <table_name_in_plural> (
 INSERT INTO <table_name_in_plural>
             (column) Values
             (Values);
-
 );
 
 
 
 #Utility Commands
 \! cls
-
 
 
 CREATE DATABASES < databases_name.;
@@ -32,8 +30,7 @@ INSERT INTO <table_name_in_plural>
 
 source C:\xampp\htdocs\dev\it30b_ancla\backups\library_db_20260820_2026-08-20.sql
 
-mysqldump -u root -p --databases library_makie > "C:\xampp\htdocs\dev\it30b_ancla\backups\library_db_20260820_%date:~10,4%-%date:~4,2%-%date:~7,2%.sql"
-
+mysqldump -u root -p --databases it30b_lab_db > "C:\xampp\htdocs\it30b_ancla\backups\it30b_lab_db_20260820_%date:~10,4%-%date:~4,2%-%date:~7,2%.sql
 ALTER TABLE students ADD COLUMN student_created_at TIMESTAMP NULL DEFAULT NULL;
 
 INSERT INTO students(student_first_name, student_last_name, student_course)
