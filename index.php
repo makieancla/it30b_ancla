@@ -127,6 +127,7 @@ $books = $pdo->query("
     FROM books
     ORDER BY book_id DESC
 ")->fetchAll();
+
 // Create Book
 if($section==='books' && $action==='create'){
     if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -222,7 +223,7 @@ if($section==='books' && $action==='update'){
         <a href="index.php?section=borrow">Borrow</a>
     </nav>
     <hr>
-      <?php if($section === 'students'):?>
+    <?php if($section === 'students'):?>
         <h1>Students</h1>
 
         <p>
