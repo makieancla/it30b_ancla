@@ -18,18 +18,36 @@ CREATE TABLE IF NOT EXISTS books (
 
 -- #3 borrow table
 CREATE TABLE IF NOT EXISTS borrow (
+    -- Primary key for the borrow table
     borrow_id INT AUTO_INCREMENT PRIMARY KEY,
+
+    -- Foreign keys for the borrow table
     student_id INT NOT NULL,
     book_id INT NOT NULL,
-    borrow_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    borrow_due_date DATE NOT NULL,
-    borrow_return_date TIMESTAMP NULL DEFAULT NULL,
+
+    -- Borrow timestamp
+    borrow_date TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    -- Borrow return timestamp null by default
+    borrow_return_date TIMESTAMP NULL
+        DEFAULT NULL,
+
+    -- Borrow table constraints and foreign keys
     CONSTRAINT fk_borrow_student
         FOREIGN KEY (student_id)
         REFERENCES students(student_id)
         ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+
+    CONSTRAINT fk_borrow_book
+        FOREIGN KEY (borrow_id)
+        REFERENCES books(book_id)
+        ON UPDATE CASCADE
         ON DELETE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_general_ci;
 
 -- insert statement #1: insert student
 INSERT INTO students (student_first_name, student_last_name, student_course) VALUES
