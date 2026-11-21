@@ -91,7 +91,7 @@ function navActive($section, $currentSection) {
 
     <nav class="nav-links">
 
-        <a href="index.php?section=dashboard"
+        <a href="dashboard.php?section=dashboard"
         class="<?= navActive('dashboard', $currentSection) ?>">
             <span class="material-icons">dashboard</span>
             Dashboard

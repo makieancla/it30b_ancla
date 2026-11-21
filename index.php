@@ -397,8 +397,8 @@ if ($section === 'borrow' && $action === 'return') {
         <h1>Students</h1>
 
         <p>
-            <a href="dashboard.php">
-                Back to dashboard
+            <a href="dashboard.php?section=dashboard">
+                Dashboard
             </a>
         </p>
         <p>
@@ -534,8 +534,8 @@ if ($section === 'borrow' && $action === 'return') {
     <h1>Books</h1>
 
     <p>
-            <a href="dashboard.php">
-                Back to dashboard
+            <a href="dashboard.php?section=dashboard">
+                Dashboard
             </a>
         </p>
     <p>
@@ -671,8 +671,8 @@ if ($section === 'borrow' && $action === 'return') {
     <h1>Borrow</h1>
 
     <p>
-            <a href="dashboard.php">
-                Back to dashboard
+            <a href="dashboard.php?section=dashboard">
+                Dashboard
             </a>
         </p>
     <p>
