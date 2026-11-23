@@ -36,7 +36,7 @@ $totalBorrows = $pdo->query(
 
 $activeBorrows = $pdo->query(
     "SELECT COUNT(*) FROM borrow
-     WHERE borrow_return_date IS NULL"
+    WHERE borrow_return_date IS NULL"
 )->fetchColumn();
 
 // ---------- BOOKS BY CATEGORY ----------
@@ -65,7 +65,7 @@ while ($row = $catStmt->fetch()) {
     <title>Library | Dashboard</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
+        rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
