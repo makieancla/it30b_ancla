@@ -368,9 +368,28 @@ for ($i = 6; $i >= 0; $i--) {
             <canvas id="borrowChart" width="400" height="200"></canvas>
         </div>
     </div>
+    <!-- CHARTS -->
+<div class="charts-grid">
+
+    <!-- Doughnut Chart: Books by Category -->
+    <div class="chart-card">
+        <div class="chart-title">
+            Books by category
+
+            <span>
+                <span class="material-icons">category</span>
+                collection
+            </span>
+        </div>
+
+        <canvas id="categoryChart" width="400" height="200"></canvas>
+    </div>
+
+    </div>
 
     <div class="footer-note">Library Management System | Dashboard</div>
 </div>
+
 
 <script>
     (function () {
