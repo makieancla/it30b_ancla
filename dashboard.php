@@ -44,7 +44,8 @@ while ($row = $catStmt->fetch()) {
     $categoryCounts[] = (int) $row['cnt'];
 }
 
-// ---------- BORROW ACTIVITY LAST 7 DAYS ----------
+// ---------- 3. BORROW ACTIVITY LAST 7 DAYS ----------
+
 $dailyStmt = $pdo->query("
     SELECT DATE(borrow_date) AS day, COUNT(*) AS cnt
     FROM borrow
@@ -52,20 +53,24 @@ $dailyStmt = $pdo->query("
     GROUP BY DATE(borrow_date)
     ORDER BY day ASC
 ");
+
 $borrowByDay = [];
+
 while ($row = $dailyStmt->fetch()) {
     $borrowByDay[$row['day']] = (int) $row['cnt'];
 }
+
+// Generate labels and counts for the last 7 days
 
 $dayLabels = [];
 $dailyBorrows = [];
 for ($i = 6; $i >= 0; $i--) {
     $date = date('Y-m-d', strtotime("-$i days"));
-    $dayLabels[]     = date('D', strtotime($date));
-    $dailyBorrows[]  = $borrowByDay[$date] ?? 0;
+
+    $dayLabels[] = date('D', strtotime($date));
+    $dailyBorrows[] = $borrowByDay[$date] ?? 0;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -348,27 +353,7 @@ for ($i = 6; $i >= 0; $i--) {
     </div>
 </div>
 
-    <!-- CHARTS -->
-    <div class="charts-grid">
-        <!-- Doughnut: Books by Category -->
-        <div class="chart-card">
-            <div class="chart-title">
-                Books by category
-                <span><span class="material-icons">category</span> collection</span>
-            </div>
-            <canvas id="categoryChart" width="400" height="200"></canvas>
-        </div>
-
-        <!-- Bar: Borrow Activity Last 7 Days -->
-        <div class="chart-card">
-            <div class="chart-title">
-                Borrows · last 7 days
-                <span><span class="material-icons">trending_up</span> activity</span>
-            </div>
-            <canvas id="borrowChart" width="400" height="200"></canvas>
-        </div>
-    </div>
-    <!-- CHARTS -->
+<!-- CHARTS -->
 <div class="charts-grid">
 
     <!-- Doughnut Chart: Books by Category -->
@@ -387,9 +372,22 @@ for ($i = 6; $i >= 0; $i--) {
 
     </div>
 
+<!-- Bar Chart: Borrow Activity -->
+<div class="chart-card">
+    <div class="chart-title">
+        Borrows · last 7 days
+
+        <span>
+            <span class="material-icons">trending_up</span>
+            activity
+        </span>
+    </div>
+
+    <canvas id="borrowChart" width="400" height="200"></canvas>
+</div>
+    
     <div class="footer-note">Library Management System | Dashboard</div>
 </div>
-
 
 <script>
     (function () {
