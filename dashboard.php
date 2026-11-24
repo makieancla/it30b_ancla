@@ -462,24 +462,82 @@ new Chart(borrowCtx, {
     }
 });
 
-        // ---------- DOUGHNUT: BOOKS BY CATEGORY ----------
-        const catCtx = document.getElementById('categoryChart').getContext('2d');
+         // ---------- DOUGHNUT: BOOKS BY CATEGORY ----------
+        const catCtx = document
+            .getElementById('categoryChart')
+            .getContext('2d');
+
         new Chart(catCtx, {
             type: 'doughnut',
+
             data: {
                 labels: <?= json_encode($categories) ?>,
+
                 datasets: [{
                     data: <?= json_encode($categoryCounts) ?>,
                     backgroundColor: [
-                        colors.blue, colors.green, colors.orange,
-                        colors.red, colors.purple, colors.grey
-                    ]
+                        colors.blue,
+                        colors.green,
+                        colors.orange,
+                        colors.red,
+                        colors.purple,
+                        colors.grey
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff',
+                    hoverOffset: 4
                 }]
             },
+
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
-                plugins: { legend: { position: 'bottom' } }
+                cutout: '65%',
+
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+
+                        labels: {
+                            boxWidth: 12,
+                            boxHeight: 12,
+                            usePointStyle: false,
+                            padding: 16,
+                            font: {
+                                size: 12,
+                                family: 'Roboto'
+                            },
+                            color: '#616161'
+                        }
+                    },
+
+                    tooltip: {
+                        backgroundColor: '#212121',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        padding: 10,
+                        cornerRadius: 4,
+                        displayColors: true,
+
+                        callbacks: {
+                            label: function (context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+
+                                const total = context.dataset.data.reduce(
+                                    (a, b) => a + b,
+                                    0
+                                );
+
+                                const pct = total > 0
+                                    ? ((value / total) * 100).toFixed(0)
+                                    : 0;
+
+                                return ` ${label}: ${value} (${pct}%)`;
+                            }
+                        }
+                    }
+                }
             }
         });
     })();
