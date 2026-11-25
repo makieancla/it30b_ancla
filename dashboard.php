@@ -324,7 +324,6 @@ for ($i = 6; $i >= 0; $i--) {
         <div class="stat-number"><?= $studentCount ?></div>
         <div class="stat-sub">enrolled</div>
     </div>
-
     <div class="stat-card">
         <div class="stat-header">
             <span class="stat-label">Books</span>
@@ -333,7 +332,6 @@ for ($i = 6; $i >= 0; $i--) {
         <div class="stat-number"><?= $bookCount ?></div>
         <div class="stat-sub">in collection</div>
     </div>
-
     <div class="stat-card">
         <div class="stat-header">
             <span class="stat-label">Borrow records</span>
@@ -342,7 +340,6 @@ for ($i = 6; $i >= 0; $i--) {
         <div class="stat-number"><?= $totalBorrows ?></div>
         <div class="stat-sub">all time</div>
     </div>
-
     <div class="stat-card">
         <div class="stat-header">
             <span class="stat-label">Active loans</span>
@@ -352,7 +349,6 @@ for ($i = 6; $i >= 0; $i--) {
         <div class="stat-sub">not returned</div>
     </div>
 </div>
-
 <!-- CHARTS -->
 <div class="charts-grid">
 
@@ -360,7 +356,6 @@ for ($i = 6; $i >= 0; $i--) {
     <div class="chart-card">
         <div class="chart-title">
             Books by category
-
             <span>
                 <span class="material-icons">category</span>
                 collection
@@ -371,21 +366,17 @@ for ($i = 6; $i >= 0; $i--) {
     </div>
 
     </div>
-
 <!-- Bar Chart: Borrow Activity -->
 <div class="chart-card">
     <div class="chart-title">
         Borrows · last 7 days
-
         <span>
             <span class="material-icons">trending_up</span>
             activity
         </span>
     </div>
-
     <canvas id="borrowChart" width="400" height="200"></canvas>
-</div>
-    
+</div> 
     <div class="footer-note">Library Management System | Dashboard</div>
 </div>
 
@@ -400,7 +391,6 @@ for ($i = 6; $i >= 0; $i--) {
             purple: '#9c27b0',
             grey: '#9e9e9e'
         };
-
         // ---------- BAR: BORROWS LAST 7 DAYS ----------
 
 const borrowCtx = document
@@ -409,43 +399,35 @@ const borrowCtx = document
 
 new Chart(borrowCtx, {
     type: 'bar',
-
     data: {
         labels: <?= json_encode($dayLabels) ?>,
-
         datasets: [{
             label: 'Borrows',
             data: <?= json_encode($dailyBorrows) ?>,
             backgroundColor: colors.blue,
             borderRadius: 0, // Material flat bars are sharp
-
             barPercentage: 0.6,
             categoryPercentage: 0.8
         }]
     },
-
     options: {
         responsive: true,
         maintainAspectRatio: true,
-
         plugins: {
             legend: {
                 display: false
             },
-
             tooltip: {
                 backgroundColor: '#212121',
                 titleColor: '#ffffff',
                 bodyColor: '#ffffff',
                 padding: 10,
                 cornerRadius: 4,
-
                 callbacks: {
                     label: (ctx) => ` ${ctx.raw} borrows`
                 }
             }
         },
-
         scales: {
             y: {
                 beginAtZero: true,
@@ -462,7 +444,6 @@ new Chart(borrowCtx, {
                     }
                 }
             },
-
             x: {
                 grid: {
                     display: false
@@ -483,13 +464,10 @@ new Chart(borrowCtx, {
         const catCtx = document
             .getElementById('categoryChart')
             .getContext('2d');
-
         new Chart(catCtx, {
             type: 'doughnut',
-
             data: {
                 labels: <?= json_encode($categories) ?>,
-
                 datasets: [{
                     data: <?= json_encode($categoryCounts) ?>,
                     backgroundColor: [
@@ -505,16 +483,13 @@ new Chart(borrowCtx, {
                     hoverOffset: 4
                 }]
             },
-
             options: {
                 responsive: true,
                 maintainAspectRatio: true,
                 cutout: '65%',
-
                 plugins: {
                     legend: {
                         position: 'bottom',
-
                         labels: {
                             boxWidth: 12,
                             boxHeight: 12,
@@ -527,7 +502,6 @@ new Chart(borrowCtx, {
                             color: '#616161'
                         }
                     },
-
                     tooltip: {
                         backgroundColor: '#212121',
                         titleColor: '#ffffff',
@@ -535,21 +509,17 @@ new Chart(borrowCtx, {
                         padding: 10,
                         cornerRadius: 4,
                         displayColors: true,
-
                         callbacks: {
                             label: function (context) {
                                 const label = context.label || '';
                                 const value = context.parsed || 0;
-
                                 const total = context.dataset.data.reduce(
                                     (a, b) => a + b,
                                     0
                                 );
-
                                 const pct = total > 0
                                     ? ((value / total) * 100).toFixed(0)
                                     : 0;
-
                                 return ` ${label}: ${value} (${pct}%)`;
                             }
                         }
@@ -559,6 +529,5 @@ new Chart(borrowCtx, {
         });
     })();
 </script>
-
 </body>
 </html>

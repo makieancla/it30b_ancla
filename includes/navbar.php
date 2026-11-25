@@ -1,4 +1,3 @@
-
 <?php
 $currentSection = $_GET['section'] ?? 'dashboard';
 

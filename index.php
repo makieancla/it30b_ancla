@@ -378,15 +378,10 @@ if ($section === 'borrow' && $action === 'return') {
 </head>
 <body>
 
-
     <h1>Simple Library System</h1>
 
-
-
-    <hr>
-
-
     <nav>
+        <a href="dashboard.php?section=dashboard">Dashboard</a>
         <a href="index.php?section=students">Students</a>
         <a href="index.php?section=books">Books</a>
         <a href="index.php?section=borrow">Borrow</a>
@@ -396,11 +391,6 @@ if ($section === 'borrow' && $action === 'return') {
 <?php if($section === 'students'):?>
         <h1>Students</h1>
 
-        <p>
-            <a href="dashboard.php?section=dashboard">
-                Dashboard
-            </a>
-        </p>
         <p>
             <a href="index.php?section=students&action=create">
                 Add student
@@ -534,11 +524,6 @@ if ($section === 'borrow' && $action === 'return') {
     <h1>Books</h1>
 
     <p>
-            <a href="dashboard.php?section=dashboard">
-                Dashboard
-            </a>
-        </p>
-    <p>
         <a href="index.php?section=books&action=create">
             Add book
         </a>
@@ -669,12 +654,6 @@ if ($section === 'borrow' && $action === 'return') {
 
 <?php if($section === 'borrow'):?>
     <h1>Borrow</h1>
-
-    <p>
-            <a href="dashboard.php?section=dashboard">
-                Dashboard
-            </a>
-        </p>
     <p>
         <a href="index.php?section=borrow&action=create">
             Borrow Book
