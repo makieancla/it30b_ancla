@@ -21,14 +21,12 @@ try {
 }
 
 // ---------- 1. KPI COUNTS ----------
-
 $studentCount  = $pdo->query("SELECT COUNT(*) FROM students")->fetchColumn();
 $bookCount     = $pdo->query("SELECT COUNT(*) FROM books")->fetchColumn();
 $totalBorrows  = $pdo->query("SELECT COUNT(*) FROM borrow")->fetchColumn();
 $activeBorrows = $pdo->query("SELECT COUNT(*) FROM borrow WHERE borrow_return_date IS NULL")->fetchColumn();
 
 // ---------- 2. BOOKS BY CATEGORY ----------
-
 $catStmt = $pdo->query("
     SELECT book_category, COUNT(*) AS cnt
     FROM books
@@ -45,7 +43,6 @@ while ($row = $catStmt->fetch()) {
 }
 
 // ---------- 3. BORROW ACTIVITY LAST 7 DAYS ----------
-
 $dailyStmt = $pdo->query("
     SELECT DATE(borrow_date) AS day, COUNT(*) AS cnt
     FROM borrow
@@ -61,18 +58,15 @@ while ($row = $dailyStmt->fetch()) {
 }
 
 // Generate labels and counts for the last 7 days
-
 $dayLabels = [];
 $dailyBorrows = [];
 for ($i = 6; $i >= 0; $i--) {
     $date = date('Y-m-d', strtotime("-$i days"));
-
     $dayLabels[] = date('D', strtotime($date));
     $dailyBorrows[] = $borrowByDay[$date] ?? 0;
 }
 
 // ---------- 4. RECENT BORROWS ----------
-
 $recentStmt = $pdo->query("
     SELECT
         s.student_first_name,
@@ -86,7 +80,6 @@ $recentStmt = $pdo->query("
     LIMIT 5
 ");
 $recentBorrows = $recentStmt->fetchAll();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -332,44 +325,50 @@ $recentBorrows = $recentStmt->fetchAll();
 
     <?php include 'includes/navbar.php' ?>
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-header">
-            <span class="stat-label">Students</span>
-            <span class="material-icons">school</span>
+<div class="dashboard">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-label">Students</span>
+                <span class="material-icons">school</span>
+            </div>
+            <div class="stat-number"><?= $studentCount ?></div>
+            <div class="stat-sub">enrolled</div>
         </div>
-        <div class="stat-number"><?= $studentCount ?></div>
-        <div class="stat-sub">enrolled</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-header">
-            <span class="stat-label">Books</span>
-            <span class="material-icons">auto_stories</span>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-label">Books</span>
+                <span class="material-icons">auto_stories</span>
+            </div>
+            <div class="stat-number"><?= $bookCount ?></div>
+            <div class="stat-sub">in collection</div>
         </div>
-        <div class="stat-number"><?= $bookCount ?></div>
-        <div class="stat-sub">in collection</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-header">
-            <span class="stat-label">Borrow records</span>
-            <span class="material-icons">history</span>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-label">Borrow records</span>
+                <span class="material-icons">history</span>
+            </div>
+            <div class="stat-number"><?= $totalBorrows ?></div>
+            <div class="stat-sub">all time</div>
         </div>
-        <div class="stat-number"><?= $totalBorrows ?></div>
-        <div class="stat-sub">all time</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-header">
-            <span class="stat-label">Active loans</span>
-            <span class="material-icons">pending_actions</span>
+
+        <div class="stat-card">
+            <div class="stat-header">
+                <span class="stat-label">Active loans</span>
+                <span class="material-icons">pending_actions</span>
+            </div>
+            <div class="stat-number"><?= $activeBorrows ?></div>
+            <div class="stat-sub">not returned</div>
         </div>
-        <div class="stat-number"><?= $activeBorrows ?></div>
-        <div class="stat-sub">not returned</div>
     </div>
-</div>
+
+
 <!-- CHARTS -->
 <div class="charts-grid">
 
-    <!-- Doughnut Chart: Books by Category -->
+    <!-- Pie Chart - Book Categories-->
     <div class="chart-card">
         <div class="chart-title">
             Books by category
@@ -381,19 +380,21 @@ $recentBorrows = $recentStmt->fetchAll();
         <canvas id="categoryChart" width="400" height="200"></canvas>
     </div>
 
-<!-- Bar Chart: Borrow Activity -->
-<div class="chart-card">
-    <div class="chart-title">
-        Borrows · last 7 days
-        <span>
-            <span class="material-icons">trending_up</span>
-            activity
-        </span>
-    </div>
-    <canvas id="borrowChart" width="400" height="200"></canvas>
-    </div> 
+    <!-- Bar Chart: Borrow Activity -->
+    <div class="chart-card">
+        <div class="chart-title">
+            Borrows · last 7 days
 
-    
+            <span>
+                <span class="material-icons">trending_up</span>
+                activity
+            </span>
+        </div>
+
+        <canvas id="borrowChart" width="400" height="200"></canvas>
+    </div>
+</div>
+
 <!-- RECENT BORROWS -->
 <div class="recent-borrows">
     <div class="recent-header">
@@ -432,8 +433,6 @@ $recentBorrows = $recentStmt->fetchAll();
     <?php endif; ?>
 </div>
 </div>
-    <div class="footer-note">Library Management System | Dashboard</div>
-</div>
 
 <script>
     (function () {
@@ -446,12 +445,11 @@ $recentBorrows = $recentStmt->fetchAll();
             purple: '#9c27b0',
             grey: '#9e9e9e'
         };
-        // ---------- BAR: BORROWS LAST 7 DAYS ----------
 
+// ---------- BAR: BORROWS LAST 7 DAYS ----------
 const borrowCtx = document
     .getElementById('borrowChart')
     .getContext('2d');
-
 new Chart(borrowCtx, {
     type: 'bar',
     data: {
@@ -499,6 +497,7 @@ new Chart(borrowCtx, {
                     }
                 }
             },
+
             x: {
                 grid: {
                     display: false
